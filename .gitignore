@@ -1,0 +1,5 @@
+*.vcd
+*.bin
+top.json
+*.out
+*.vvp
