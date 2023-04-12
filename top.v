@@ -1,7 +1,16 @@
 module top (
-    output reg RF,
-    output reg TEST
+    output reg PMOD2_0,
+    output reg PMOD2_1,
+    output reg PMOD2_2,
+    output reg PMOD2_3,
+    output reg PMOD2_4,
+    output reg PMOD2_5,
+    output reg PMOD2_6,
+    output reg PMOD2_7
 );
+    reg [7:0] counter0 = 0;
+    reg [31:0] counter1 = 0;
+
     // clk 6MHz
     wire clk;
     SB_HFOSC #(
@@ -12,33 +21,32 @@ module top (
         .CLKHF  (clk)
     );
 
-    reg [ 7:0] counter0 = 0;
-    reg [31:0] counter1 = 0;
-
-    assign TEST = clk;
-
     always @(posedge clk) begin
-        // 产生一个500KHz的信号
-        if (counter1 >= 1000) begin
-            counter1 <= 0;
-        end else begin
-            counter1 <= counter1 + 1;
-        end
-
         if (counter0 >= 23) begin
             counter0 <= 0;
         end else begin
             counter0 <= counter0 + 1;
         end
-
         if (counter0 >= 11) begin
-            if (counter1 >= 500) begin
-                RF <= 1;
-            end else begin
-                RF <= 0;
-            end
+            PMOD2_4 <= 0;
         end else begin
-            RF <= 0;
+            PMOD2_4 <= 1;
         end
     end
+
+    always @(posedge clk) begin
+        if (counter1 >= 599999) begin
+            counter1 <= 0;
+        end else begin
+            counter1 <= counter1 + 1;
+        end
+        if (counter1 >= 299999) begin
+            PMOD2_0 <= 1;
+            PMOD2_5 <= 1;
+        end else begin
+            PMOD2_0 <= 0;
+            PMOD2_5 <= 0;
+        end
+    end
+
 endmodule

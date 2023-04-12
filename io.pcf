@@ -1,2 +1,8 @@
-set_io RF   37
-set_io TEST 36
+set_io PMOD2_0 37
+set_io PMOD2_1 42
+set_io PMOD2_2 44
+set_io PMOD2_3 46
+set_io PMOD2_4 36
+set_io PMOD2_5 38
+set_io PMOD2_6 43
+set_io PMOD2_7 45
